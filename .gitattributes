@@ -1,0 +1,4 @@
+frontend/public/robots.txt merge=ours
+frontend/next.config.js merge=ours
+backend/api/lead-form-submissions/models/lead-form-submissions.js merge=ours
+frontend/tailwind.config.js merge=ours

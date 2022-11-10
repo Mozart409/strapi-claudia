@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_DB: strapi
+    ports:
+      - '54321:5432'
+    networks:
+      - strapi-monorepo
+
+  # redis:
+  #   depends_on:
+  #     - db
+  #   image: 'bitnami/redis:latest'
+  #   ports:
+  #     - '6379:6379'
+  #   environment:
+  #     - ALLOW_EMPTY_PASSWORD=yes
+  #   networks:
+  #     - strapi-monorepo
+
+volumes:
+  data:
+networks:
+  strapi-monorepo:
+    driver: bridge

@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "outDir": "./next",
+    "allowJs": true,
+    "target": "ESNext",
+    "baseUrl": ".",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": false,
+    "removeComments": true,
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/lib/*": ["lib/*"],
+      "@/styles/*": ["styles/*"]
+    }
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules", ".next"]
+}

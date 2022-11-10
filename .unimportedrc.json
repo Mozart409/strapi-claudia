@@ -1,0 +1,8 @@
+{
+  "entry": ["frontend"],
+  "extensions": [".ts", ".js", ".jsx", ".tsx"],
+  "ignorePatterns": ["**/node_modules/**", "private/**", "backend/**"],
+  "ignoreUnresolved": ["some-npm-dependency"],
+  "ignoreUnimported": ["src/i18n/locales/en.ts", "src/i18n/locales/nl.ts"],
+  "ignoreUnused": []
+}
