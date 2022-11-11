@@ -15,7 +15,7 @@
     "@sendgrid/mail": "^7.7.0",
     "knex": "1.0.4",
     "pg": "^8.7.1",
-    "strapi": "3.6.9",
+    "strapi": "3.6.10",
     "strapi-admin": "3.6.9",
     "strapi-connector-bookshelf": "3.6.9",
     "strapi-plugin-content-manager": "3.6.9",
