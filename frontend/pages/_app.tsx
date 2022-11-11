@@ -31,6 +31,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const { metadata } = global
 
   const shareImages: IMedia = metadata.shareImage
+
   return (
     <>
       {/* Favicon */}
@@ -65,7 +66,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <DefaultSeo
         description={metadata.metaDescription}
         openGraph={{
-          url: getStrapiMedia(shareImages.url),
+          url: getStrapiMedia(shareImages?.url),
 
           /* images: Object.values(shareImages).map((image) => {
             return {
