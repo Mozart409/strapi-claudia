@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.3.4",
   "scripts": {
-    "predev": "docker-compose up -d --build",
     "develop:backend": "yarn --cwd backend develop",
     "develop:frontend": "wait-on http://localhost:1337/admin && yarn --cwd frontend develop",
     "dev2": "cross-env FORCE_COLOR=1 npm-run-all -l -p develop:*",
