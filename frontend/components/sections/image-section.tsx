@@ -47,21 +47,21 @@ interface IImageSectionProps {
 
 const ImageSection: React.FC<IImageSectionProps> = ({ data }) => {
   return (
-    <div className="container mx-auto my-0 grid max-w-prose grid-cols-1 justify-items-center sm:my-4 md:my-8 md:max-w-screen-md lg:max-w-screen-lg">
+    <div className="container mx-auto grid max-w-prose grid-cols-1 md:max-w-screen-md lg:max-w-screen-lg">
       <LinkWrapper link={data?.link}>
         <BorderWrapper image_border={data.image_border}>
           {data.small_image ? (
             <CustomImage
               media={data?.picture}
-              width={333}
-              height={250}
+              width={1024}
+              height={768}
               className="mx-auto w-full object-contain"
             />
           ) : (
             <CustomImage
               media={data?.picture}
-              width={500}
-              height={375}
+              width={1024}
+              height={768}
               className="mx-auto w-full object-contain"
             />
           )}

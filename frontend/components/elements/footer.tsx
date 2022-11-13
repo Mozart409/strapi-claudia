@@ -20,7 +20,7 @@ const Footer: React.FC<FooterProps> = ({ footer }) => {
             <NextImage width="120" height="50" media={footer.logo} />
           )}
         </div>
-        <nav className="mx-auto mb-10 flex flex-row flex-wrap items-start px-4 sm:px-6 lg:justify-end lg:gap-20 lg:px-8">
+        <nav className="mb-10 flex flex-row flex-wrap items-start lg:justify-end lg:gap-20">
           {footer.columns.map((footerColumn) => (
             <div
               key={footerColumn.id}

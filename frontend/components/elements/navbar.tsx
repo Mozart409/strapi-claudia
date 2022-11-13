@@ -36,13 +36,13 @@ const Navbar = ({ navbar, pageContext }: INavbar) => {
   return (
     <>
       {/* The actual navbar */}
-      <nav className="border-b-2 border-gray-200 py-6 sm:py-2 ">
+      <nav className="border-b-2 border-gray-200 py-6 sm:py-2">
         <div className="container flex flex-row items-center justify-between">
           {/* Content aligned to the left */}
           <div className="flex flex-row items-center">
             <Link href="/">
-              <a className="h-8 w-32">
-                <NextImage width="120" height="50" media={navbar.logo} />
+              <a>
+                <NextImage width={64} height={64} media={navbar.logo} />
               </a>
             </Link>
             {/* List of links on desktop */}

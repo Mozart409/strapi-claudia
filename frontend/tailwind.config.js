@@ -1,6 +1,7 @@
 const colors = require("tailwindcss/colors")
 const defaultTheme = require("tailwindcss/defaultTheme")
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -9,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: colors.amber,
+        primary: colors.blue,
         cyan: colors.cyan,
         yellow: colors.amber,
         orange: colors.orange,
