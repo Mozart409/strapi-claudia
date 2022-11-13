@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import Document, { Html, Head, Main, NextScript } from "next/document"
 import { nanoid } from "nanoid"
+import Script from "next/script"
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -71,6 +72,13 @@ export default class MyDocument extends Document {
           </noscript>
           <Main />
           <NextScript />
+          <Script
+            id="usercentrics-cmp"
+            data-settings-id={process.env.NEXT_PUBLIC_USERCENTRICS_SETTINGS_ID}
+            src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
+            async
+            strategy="beforeInteractive"
+          />
         </body>
       </Html>
     )

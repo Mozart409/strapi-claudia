@@ -23,7 +23,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }
 
   // Extract the data we need
-  const { global } = pageProps
+  const { global }: any = pageProps
   if (global == null) {
     return <ErrorPage statusCode={404} />
   }
@@ -40,13 +40,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <link rel="prefetch" href="/fonts/inter-var-latin.woff2" />
       </Head>
 
-      <Script
-        id="usercentrics-cmp"
-        data-settings-id={process.env.NEXT_PUBLIC_USERCENTRICS_SETTINGS_ID}
-        src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
-        async
-        strategy="beforeInteractive"
-      />
       <Script
         id="Google Tag Manager"
         data-usercentrics="Google Tag Manager"
