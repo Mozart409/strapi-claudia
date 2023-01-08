@@ -1,50 +1,64 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react"
-import { fetchAPI } from "utils/api"
-import * as yup from "yup"
-import { Formik, Form, Field, ErrorMessage } from "formik"
+
+import { z } from "zod"
+import { useZorm } from "react-zorm"
+
 import toast from "react-hot-toast"
 import slugify from "slugify"
+import { useMutation } from "react-query"
+import axios from "axios"
 
-const CheckboxComponent = ({ data }) => {
-  if (data.length > 0)
-    return (
-      <div>
-        <label
-          htmlFor="checkbox"
-          className="mt-2 block text-left text-sm font-medium text-gray-700"
-        >
-          Check
-        </label>
-        <Field
-          name="checkbox"
-          as="select"
-          className="mt-1 block w-full rounded-md border-gray-300 py-3 px-4 pr-10 pl-3 text-base focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
-        >
-          {data.map((item) => (
-            <option key={item.id} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </Field>
-        <ErrorMessage
-          render={(msg) => <p className="error-style capitalize">{msg}</p>}
-          name="checkbox"
-        />
-      </div>
-    )
-  return null
+export const FormSchema = z.object({
+  name: z.string().optional(),
+  email: z.string().email().min(1, { message: "Message is required" }),
+  tel: z.string().optional(),
+  subject: z.string().min(1, { message: "Message is required" }),
+  message: z
+    .string()
+    .min(1, { message: "Message is required" })
+    .transform(String),
+})
+
+function ErrorMessage(props: { message: string }) {
+  return <div className="text-sm text-red-500">{props.message}</div>
 }
+
+// extract the inferred type
+export type TFormSchema = z.infer<typeof FormSchema>
 
 const LeadForm = ({ data }) => {
   const [loading, setLoading] = useState(false)
 
-  const LeadSchema = yup.object().shape({
-    name: yup.string().optional(),
-    email: yup.string().email().required(),
-    tel: yup.number().optional(),
-    subject: yup.string().optional(),
-    message: yup.string().required(),
+  const mutationContactForm = useMutation((newContactForm: TFormSchema) => {
+    return axios.post("/api/mail", newContactForm)
   })
+
+  const zo = useZorm("contact", FormSchema, {
+    async onValidSubmit(e) {
+      e.preventDefault()
+
+      setLoading(true)
+
+      await mutationContactForm.mutate(e.data)
+
+      if (mutationContactForm.error) {
+        console.log(mutationContactForm.error)
+        window?.dataLayer?.push({
+          event: "form-error",
+        })
+        toast.error("Fehler " + mutationContactForm.error)
+      }
+
+      toast.success("Vielen Dank für Ihre Nachricht!")
+      window?.dataLayer?.push({
+        event: "form-sent",
+      })
+
+      setLoading(false)
+    },
+  })
+  const disabled = zo.validation?.success === false
 
   return (
     <div className="py-10 text-center">
@@ -57,167 +71,142 @@ const LeadForm = ({ data }) => {
       >
         {data.title}
       </h2>
+
+      {/* <div>
+        {mutationContactForm.isLoading ? (
+          "Adding todo..."
+        ) : (
+          <>
+            {mutationContactForm.isError ? (
+              <div>
+                An error occurred: {mutationContactForm.error.toString()}
+              </div>
+            ) : null}
+
+            {mutationContactForm.isSuccess ? <div>Todo added!</div> : null}
+
+            <button
+              onClick={() => {
+                mutationContactForm.mutate({
+                  email: "amadeus@gmail.com",
+                  subject: "Test",
+                  name: "Test",
+                  message: "TESTTEST",
+                })
+              }}
+            >
+              Create FORM
+            </button>
+          </>
+        )}
+      </div> */}
+
       <div className="overflow-hidden bg-white py-6 px-4 sm:px-6 lg:py-8 lg:px-8">
         <div className="mx-auto max-w-xl">
-          <Formik
-            initialValues={{
-              name: "",
-              email: "",
-              tel: "",
-              subject: "",
-              message: "",
-              checkbox: "",
-            }}
-            validationSchema={LeadSchema}
-            onSubmit={async (values, { setSubmitting, setErrors }) => {
-              setLoading(true)
-
-              try {
-                setErrors({})
-                const response = await fetchAPI("/lead-form-submissions", {
-                  method: "POST",
-                  body: JSON.stringify({
-                    name: values.name,
-                    email: values.email,
-                    tel: values.tel,
-                    subject: values.subject,
-                    message: values.message,
-                    checkbox: values.checkbox,
-                    location: data.location,
-                  }),
-                })
-
-                toast.success("Vielen Dank für Ihre Nachricht!")
-                window.dataLayer.push({ event: "form-sent" })
-              } catch (err) {
-                setErrors({})
-                window.dataLayer.push({
-                  event: "form-error",
-                })
-                toast.error(err.message)
-              }
-
-              setLoading(false)
-              setSubmitting(false)
-              toast.success("Nachricht gesendet")
-            }}
-          >
-            {({ errors, touched, isSubmitting }) => (
-              <div className="max-w-prose">
-                <Form className="flex flex-col gap-4">
-                  <label
-                    htmlFor="name"
-                    className="mt-2 block text-left text-sm font-medium text-gray-700"
-                  >
-                    Name
-                  </label>
-
-                  <Field
+          <form ref={zo.ref}>
+            {/* {usePostForm.error && (
+              <h5 onClick={() => usePostForm.reset()}>
+                Form Error {usePostForm.error.toString()}
+              </h5>
+            )} */}
+            <div className="flex max-w-prose flex-col gap-4">
+              <div>
+                <label className="mt-2 block text-left text-sm font-medium text-gray-700">
+                  Name
+                  <input
                     className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                     type="text"
-                    name="name"
-                    placeholder={data.namePlaceholder}
+                    name={zo.fields.name()}
                   />
-                  <ErrorMessage
-                    render={(msg) => (
-                      <p className="error-style capitalize">{msg}</p>
-                    )}
-                    name="name"
-                  />
-                  <label
-                    htmlFor="email"
-                    className="mt-2 block text-left text-sm font-medium text-gray-700"
-                  >
-                    E-Mail (*)
-                  </label>
-                  <Field
-                    className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                    type="email"
-                    name="email"
-                    placeholder={data.emailPlaceholder}
-                  />
-                  <ErrorMessage
-                    render={(msg) => (
-                      <p className="error-style capitalize">{msg}</p>
-                    )}
-                    name="email"
-                  />
-                  <label
-                    htmlFor="tel"
-                    className="mt-2 block text-left text-sm font-medium text-gray-700"
-                  >
-                    Phone
-                  </label>
-                  <Field
-                    className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                    type="tel"
-                    name="tel"
-                    placeholder={data.telPlaceholder}
-                  />
-                  <ErrorMessage
-                    render={(msg) => (
-                      <p className="error-style capitalize">{msg}</p>
-                    )}
-                    name="tel"
-                  />
-                  <label
-                    htmlFor="subject"
-                    className="mt-2 block text-left text-sm font-medium text-gray-700"
-                  >
-                    Subject
-                  </label>
-                  <Field
-                    className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                    type="text"
-                    name="subject"
-                    placeholder={data.subjectPlaceholder}
-                  />
-                  <ErrorMessage
-                    render={(msg) => (
-                      <p className="error-style capitalize">{msg}</p>
-                    )}
-                    name="subject"
-                  />
-
-                  {/* <CheckboxComponent data={data.CheckboxRow} /> */}
-
-                  <label
-                    htmlFor="message"
-                    className="mt-2 block text-left text-sm font-medium text-gray-700"
-                  >
-                    Message (*)
-                  </label>
-                  <Field
-                    className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                    type="text"
-                    name="message"
-                    as="textarea"
-                    rows="8"
-                    placeholder={data.textPlaceholder}
-                  />
-                  <ErrorMessage
-                    render={(msg) => (
-                      <p className="error-style capitalize">{msg}</p>
-                    )}
-                    name="message"
-                  />
-                  {/*   <Button
-                    type="submit"
-                    button={data.submitButton}
-                    loading={loading}
-                    appearance={'dark'}
-                  /> */}
-
-                  <button
-                    type="submit"
-                    className="flex w-full justify-center rounded-md border-2 border-primary-600 bg-primary-600 py-4 px-8 text-center text-base font-semibold uppercase tracking-wide text-white md:text-sm lg:w-auto"
-                  >
-                    {data.submitButton.text}
-                  </button>
-                </Form>
+                </label>
               </div>
-            )}
-          </Formik>
+
+              {zo.errors.name((e) => (
+                <ErrorMessage message={e.message} />
+              ))}
+
+              <div>
+                <label className="mt-2 block text-left text-sm font-medium text-gray-700">
+                  E-Mail (*)
+                  <input
+                    className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    type="text"
+                    name={zo.fields.email()}
+                  />
+                </label>
+              </div>
+
+              {zo.errors.email((e) => (
+                <ErrorMessage message={e.message} />
+              ))}
+
+              <div>
+                <label className="mt-2 block text-left text-sm font-medium text-gray-700">
+                  Telefon
+                  <input
+                    className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    type="text"
+                    name={zo.fields.tel()}
+                  />
+                </label>
+              </div>
+
+              {zo.errors.tel((e) => (
+                <ErrorMessage message={e.message} />
+              ))}
+
+              <div>
+                <label className="mt-2 block text-left text-sm font-medium text-gray-700">
+                  Betreff (*)
+                  <input
+                    className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    type="text"
+                    name={zo.fields.subject()}
+                  />
+                </label>
+              </div>
+
+              {zo.errors.subject((e) => (
+                <ErrorMessage message={e.message} />
+              ))}
+
+              {/* <CheckboxComponent data={data.CheckboxRow} /> */}
+
+              <label className="mt-2 block text-left text-sm font-medium text-gray-700">
+                Message (*)
+                <textarea
+                  className="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                  name={zo.fields.message()}
+                  /* className={zo.errors.message("errored")} */
+                  rows={8}
+                  placeholder={data.textPlaceholder}
+                />
+              </label>
+              {zo.errors.message((e) => (
+                <ErrorMessage message={e.message} />
+              ))}
+
+              {mutationContactForm.isLoading ? (
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md border-2 border-primary-600 bg-primary-600 py-4 px-8 text-center text-base font-semibold uppercase tracking-wide text-white md:text-sm lg:w-auto"
+                >
+                  {/* {data.submitButton.text} */} Sending ...
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={disabled}
+                  className="flex w-full justify-center rounded-md border-2 border-primary-600 bg-primary-600 py-4 px-8 text-center text-base font-semibold uppercase tracking-wide text-white md:text-sm lg:w-auto"
+                >
+                  {/* Sending ... */} {data.submitButton.text}
+                </button>
+              )}
+            </div>
+            {/* <pre>
+              Validation status: {JSON.stringify(zo.validation, null, 2)}
+            </pre> */}
+          </form>
         </div>
       </div>
     </div>

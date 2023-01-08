@@ -1,3 +1,5 @@
+import { TFormSchema } from "@/components/sections/lead-form"
+
 export function getStrapiURL(path: string) {
   //  console.log(process.env.NEXT_PUBLIC_STRAPI_API_URL)
   return `${
@@ -36,13 +38,6 @@ export async function fetchAPI(path: string, options = {}) {
  * @param {boolean} preview router isPreview value
  */
 
-interface IPageData {
-  params: {
-    slug: []
-  }
-  locale: string
-  preview: boolean
-}
 export async function getPageData(params, locale, preview = false) {
   const slug = params.slug.join("/")
   // Find the pages that match this slug
