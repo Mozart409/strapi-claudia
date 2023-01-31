@@ -76,11 +76,9 @@ const Pricing = ({ data }: Pricing) => {
                     </span>
                   </p>
                   <Link href="/kontakt">
-                    <a>
-                      <span className="mt-8 block w-full rounded-md border border-gray-800 bg-gray-800 py-2 text-center text-sm font-semibold text-white hover:bg-gray-900">
-                        Buy {plan.name}
-                      </span>
-                    </a>
+                    <span className="mt-8 block w-full rounded-md border border-gray-800 bg-gray-800 py-2 text-center text-sm font-semibold text-white hover:bg-gray-900">
+                      Buy {plan.name}
+                    </span>
                   </Link>
                 </div>
                 <div className="px-6 pt-6 pb-8">

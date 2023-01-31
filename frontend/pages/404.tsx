@@ -24,9 +24,7 @@ export default function Custom404() {
               </div>
               <div className="mt-10 flex space-x-3 sm:border-l sm:border-transparent sm:pl-6">
                 <Link href="/">
-                  <a>
-                    <CustomButton text="Go back home." />
-                  </a>
+                  <CustomButton text="Go back home." />
                 </Link>
               </div>
             </div>

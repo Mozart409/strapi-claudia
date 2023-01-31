@@ -15,15 +15,14 @@ function MyLink(props) {
   let { href, children, ...rest } = props
   return (
     <div className="w-full">
-      <Link href={href}>
-        <a
-          className={
-            "block w-full bg-white px-4 py-2 text-sm hover:bg-gray-700 hover:text-gray-300 active:bg-gray-100 active:text-gray-900"
-          }
-          {...rest}
-        >
-          {children}
-        </a>
+      <Link
+        href={href}
+        className={
+          "block w-full bg-white px-4 py-2 text-sm hover:bg-gray-700 hover:text-gray-300 active:bg-gray-100 active:text-gray-900"
+        }
+        {...rest}
+      >
+        {children}
       </Link>
     </div>
   )
@@ -41,22 +40,20 @@ const Navbar = ({ navbar, pageContext }: INavbar) => {
           {/* Content aligned to the left */}
           <div className="flex flex-row items-center">
             <Link href="/">
-              <a>
-                <NextImage width={64} height={64} media={navbar.logo} />
-              </a>
+              <NextImage width={64} height={64} media={navbar.logo} />
             </Link>
             {/* List of links on desktop */}
             {/* <ul className="hidden flex-row gap-4 items-baseline ml-10 list-none md:flex">
-              {navbar.links.map((navLink) => (
-                <li key={navLink.id}>
-                  <CustomLink link={navLink}>
-                    <div className="py-1 px-2 hover:text-gray-900">
-                      {navLink.text}
-                    </div>
-                  </CustomLink>
-                </li>
-              ))}
-            </ul> */}
+            {navbar.links.map((navLink) => (
+              <li key={navLink.id}>
+                <CustomLink link={navLink}>
+                  <div className="py-1 px-2 hover:text-gray-900">
+                    {navLink.text}
+                  </div>
+                </CustomLink>
+              </li>
+            ))}
+          </ul> */}
 
             <ul className="ml-10 hidden list-none flex-row items-baseline gap-4 md:flex">
               {navbar.links.map((menuLink) => (
@@ -66,8 +63,12 @@ const Navbar = ({ navbar, pageContext }: INavbar) => {
                       <div>
                         <div>
                           <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-                            <Link href={menuLink.url} passHref>
-                              <a title={menuLink.title}>{menuLink.text}</a>
+                            <Link
+                              href={menuLink.url}
+                              passHref
+                              title={menuLink.title}
+                            >
+                              {menuLink.text}
                             </Link>
                             <ChevronDownIcon
                               className="-mr-1 ml-2 h-5 w-5"
@@ -101,8 +102,8 @@ const Navbar = ({ navbar, pageContext }: INavbar) => {
                     </Menu>
                   ) : (
                     <div>
-                      <Link href={menuLink.url} passHref>
-                        <a title={menuLink.title}>{menuLink.text}</a>
+                      <Link href={menuLink.url} passHref title={menuLink.title}>
+                        {menuLink.text}
                       </Link>
                     </div>
                   )}

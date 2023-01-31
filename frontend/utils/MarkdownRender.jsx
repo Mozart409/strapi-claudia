@@ -9,7 +9,7 @@ const MarkdownRender = (props) => {
       if (href.startsWith("#")) {
         return (
           <Link href={href} title={title} className="anchor">
-            <a>{children}</a>
+            {children}
           </Link>
         )
       }
@@ -17,7 +17,7 @@ const MarkdownRender = (props) => {
       if (href.startsWith("/"))
         return (
           <Link href={href} title={title} className="internal">
-            <a>{children}</a>
+            {children}
           </Link>
         )
 

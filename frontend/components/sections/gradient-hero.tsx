@@ -70,34 +70,33 @@ const SingleCard = ({
       onClick={() => setIsOpen(!isOpen)}
       className="flex h-full flex-col overflow-y-auto rounded-lg shadow-lg"
     >
-      <Link href={url}>
-        <a
-          // Change target and rel attributes is newTab is turned on
-          target={newTab ? "_blank" : "_self"}
-          rel={newTab ? "noopener noreferrer" : ""}
-          title={tilte}
-        >
-          <div className="relative flex-shrink-0">
-            <CustomImage
-              className="h-96 w-full object-cover"
-              media={image}
-              width={1000}
-              height={700}
-            />
-            <div className="absolute bottom-0 left-0 w-full">
-              <div className="mx-auto flex flex-1 flex-col justify-between bg-white py-2 px-6">
-                <div className="flex-1">
-                  <p className="text-md bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-left font-bold text-transparent">
-                    {category}
-                  </p>
-                  <div className="justify-left mt-2 flex">
-                    <MarkdownRender>{text}</MarkdownRender>
-                  </div>
+      <Link
+        href={url}
+        // Change target and rel attributes is newTab is turned on
+        target={newTab ? "_blank" : "_self"}
+        rel={newTab ? "noopener noreferrer" : ""}
+        title={tilte}
+      >
+        <div className="relative flex-shrink-0">
+          <CustomImage
+            className="h-96 w-full object-cover"
+            media={image}
+            width={1000}
+            height={700}
+          />
+          <div className="absolute bottom-0 left-0 w-full">
+            <div className="mx-auto flex flex-1 flex-col justify-between bg-white py-2 px-6">
+              <div className="flex-1">
+                <p className="text-md bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-left font-bold text-transparent">
+                  {category}
+                </p>
+                <div className="justify-left mt-2 flex">
+                  <MarkdownRender>{text}</MarkdownRender>
                 </div>
               </div>
             </div>
           </div>
-        </a>
+        </div>
       </Link>
     </div>
   )

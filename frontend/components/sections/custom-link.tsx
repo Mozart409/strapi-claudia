@@ -6,8 +6,8 @@ const CustomLink = ({ link, children }) => {
     if (link?.url?.startsWith("/")) {
       // For internal links, use the Next.js Link component
       return (
-        <Link href="/[[...slug]]" as={link?.url}>
-          <a title={link?.title}>{children}</a>
+        <Link href="/[[...slug]]" as={link?.url} title={link?.title}>
+          {children}
         </Link>
       )
     }
@@ -31,8 +31,8 @@ const CustomLink = ({ link, children }) => {
     if (link?.url?.url.startsWith("/")) {
       // For internal links, use the Next.js Link component
       return (
-        <Link href="/[[...slug]]" as={link?.url?.url}>
-          <a title={link?.url?.title}>{children}</a>
+        <Link href="/[[...slug]]" as={link?.url?.url} title={link?.url?.title}>
+          {children}
         </Link>
       )
     }

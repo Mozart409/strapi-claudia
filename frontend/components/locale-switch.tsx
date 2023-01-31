@@ -91,7 +91,13 @@ const LocaleSwitch = ({ pageContext }) => {
         {pageContext.localizedPaths &&
           pageContext.localizedPaths.map(({ href, locale }) => {
             return (
-              <Link href={href} key={locale} locale={locale} passHref>
+              <Link
+                href={href}
+                key={locale}
+                locale={locale}
+                passHref
+                legacyBehavior
+              >
                 <p
                   onClick={() => handleLocaleChange(locale)}
                   className="cursor-pointer rounded-md p-2 text-center capitalize hover:bg-primary-50 hover:text-primary-600"
