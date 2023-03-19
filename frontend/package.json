@@ -24,7 +24,7 @@
     "date-fns": "2.29.3",
     "formik": "^2.2.9",
     "js-cookie": "3.0.1",
-    "lru-cache": "^7.14.1",
+    "lru-cache": "^8.0.4",
     "nanoid": "^4.0.0",
     "next": "^13.1.6",
     "next-compose-plugins": "^2.2.1",
@@ -45,7 +45,7 @@
     "uuid": "^9.0.0",
     "webpack": "^5.73.0",
     "webpack-stats-plugin": "^1.0.3",
-    "yup": "^0.32.11",
+    "yup": "^1.0.2",
     "zod": "^3.20.2"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "@types/cors": "^2.8.13",
     "@types/postcss-import": "^14.0.0",
     "@types/react": "^18.0.27",
-    "@types/tailwindcss": "^3.0.10",
+    "@types/tailwindcss": "^3.1.0",
     "@types/uuid": "^9.0.0",
     "autoprefixer": "^10.4.7",
     "eslint": "^8.33.0",
