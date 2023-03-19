@@ -33,8 +33,8 @@ const FeatureRowsGroup = ({ data }) => {
                 <NextImage
                   media={feature.media}
                   className=""
-                  width=""
-                  height=""
+                  width={128}
+                  height={128}
                 />
               </div>
             )}

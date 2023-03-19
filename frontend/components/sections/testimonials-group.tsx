@@ -132,8 +132,8 @@ const TestimonialsGroup: FC<TestimonialsProps> = ({ data }) => {
                 {data.logos.map((logo) => (
                   <NextImage
                     key={logo.id}
-                    width="120"
-                    height="33"
+                    width={120}
+                    height={33}
                     media={logo.logo}
                   />
                 ))}

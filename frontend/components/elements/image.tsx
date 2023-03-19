@@ -4,8 +4,8 @@ import Image from "next/legacy/image"
 interface CustomImageProps {
   media?: IMedia
   className?: string
-  width?: string | number
-  height?: string | number
+  width?: number
+  height?: number
 }
 
 const NextImage = ({ media, ...props }: CustomImageProps) => {
