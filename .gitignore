@@ -3,6 +3,11 @@ build/**
 dist/**
 .next/**
 
+.env.local
+.sst/
+
+.next
+.open-next
 db/
 
 ############################
