@@ -1,29 +1,40 @@
 {
   "name": "strapi-monorepo",
   "private": true,
-  "version": "0.3.4",
+  "version": "0.4.0",
+  "type": "module",
   "scripts": {
+    "sst:dev": "sst dev",
+    "sst:build": "sst build",
+    "sst:deploy": "sst deploy",
+    "sst:remove": "sst remove",
+    "sst:console": "sst console",
     "develop:backend": "yarn --cwd backend develop",
     "develop:frontend": "wait-on http://localhost:1337/admin && yarn --cwd frontend develop",
     "dev2": "cross-env FORCE_COLOR=1 npm-run-all -l -p develop:*",
     "dev": "turbo run dev --parallel",
-    "tokei": "tokei ./backend ./frontend --sort code --output yaml > tokei.yml",
-    "tokei:chart": "tokei ./backend ./frontend --sort code --output json | tokei-pie",
+    "tokei": "tokei ./packages --sort code --output yaml > tokei.yml",
     "prepare": "is-ci || husky install",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\""
   },
+  "dependencies": {
+    "@sls-next/lambda-at-edge": "^3.7.0"
+  },
   "devDependencies": {
+    "@tsconfig/node14": "^1.0.3",
+    "aws-cdk-lib": "2.70.0",
+    "constructs": "10.1.289",
     "cross-env": "7.0.3",
     "husky": "^8.0.1",
     "is-ci": "^3.0.1",
     "lint-staged": ">=13.0.2",
     "prettier": "^2.8.7",
-    "turbo": "^1.8.5"
+    "sst": "^2.3.0",
+    "turbo": "^1.8.5",
+    "typescript": "^5.0.2"
   },
-  "packageManager": "yarn@1.22.17",
   "workspaces": [
-    "backend/",
-    "frontend/"
+    "packages/*"
   ],
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md}": "prettier --write"
