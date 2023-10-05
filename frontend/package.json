@@ -63,7 +63,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "postcss": "8.4.21",
+    "postcss": "8.4.31",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-nested": "^6.0.0",
     "postcss-preset-env": "^8.0.1",
